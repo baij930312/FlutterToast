@@ -48,6 +48,7 @@ class _MyAppState extends State<MyApp> {
     Fluttertoast.showToast(
         msg: "This is Center Short Toast",
         toastLength: Toast.LENGTH_SHORT,
+        showCheck: true,
         gravity: ToastGravity.CENTER,
         timeInSecForIos: 1);
   }

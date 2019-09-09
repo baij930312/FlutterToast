@@ -41,6 +41,7 @@ static NSString *const CHANNEL_NAME = @"PonnamKarthik/fluttertoast";
         result([NSNumber numberWithBool:true]);
     } else if ([@"showToast" isEqualToString:call.method]) {
         NSString *msg = call.arguments[@"msg"];
+        Boolean showCheck = call.arguments[@"showCheck"];
         NSString *gravity = call.arguments[@"gravity"];
         NSString *durationTime = call.arguments[@"time"];
         NSNumber *bgcolor = call.arguments[@"bgcolor"];
@@ -64,6 +65,7 @@ static NSString *const CHANNEL_NAME = @"PonnamKarthik/fluttertoast";
         style.messageFont = [UIFont systemFontOfSize:cgf];
         style.backgroundColor = [self colorWithHex:bgcolor.unsignedIntegerValue];
         style.messageColor = [self colorWithHex:textcolor.unsignedIntegerValue];
+        style.imageSize = CGSizeMake(20, 20);
 
         if (@available(iOS 11.0, *)) {
             UIWindow *window = UIApplication.sharedApplication.keyWindow;
@@ -72,13 +74,20 @@ static NSString *const CHANNEL_NAME = @"PonnamKarthik/fluttertoast";
         }
 
         if ([gravity isEqualToString:@"top"]) {
-            
+           
             [[self _readKeyWindow] makeToast:msg duration:time position:CSToastPositionTop style:style];
             
+           
+            
         } else if ([gravity isEqualToString:@"center"]) {
-            
-            [[self _readKeyWindow] makeToast:msg duration:time position:CSToastPositionCenter style:style];
-            
+            if (showCheck) {
+                
+                [[self _readKeyWindow] makeToast:msg duration:time position:CSToastPositionCenter title:@"" image:[UIImage imageNamed:@"chenggong"] style:style completion:^(BOOL didTap) {
+                    
+                }];
+            }else{
+                [[self _readKeyWindow] makeToast:msg duration:time position:CSToastPositionCenter style:style];
+            }
         } else {
             
             [[self _readKeyWindow] makeToast:msg duration:time position:CSToastPositionBottom style:style];

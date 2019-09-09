@@ -208,8 +208,10 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     if(image != nil) {
         imageView = [[UIImageView alloc] initWithImage:image];
+       
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.frame = CGRectMake(style.horizontalPadding, style.verticalPadding, style.imageSize.width, style.imageSize.height);
+        
     }
     
     CGRect imageRect = CGRectZero;
@@ -251,6 +253,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         messageLabel.alpha = 1.0;
         messageLabel.text = message;
         
+        
         CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageRect.size.width, self.bounds.size.height * style.maxHeightPercentage);
         CGSize expectedSizeMessage = [messageLabel sizeThatFits:maxSizeMessage];
         // UILabel can return a size larger than the max size when the number of lines is 1
@@ -270,8 +273,8 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     CGRect messageRect = CGRectZero;
     
     if(messageLabel != nil) {
-        messageRect.origin.x = imageRect.origin.x + imageRect.size.width + style.horizontalPadding;
-        messageRect.origin.y = titleRect.origin.y + titleRect.size.height + style.verticalPadding;
+        messageRect.origin.x = imageRect.origin.x + imageRect.size.width + 8;
+        messageRect.origin.y = style.verticalPadding;
         messageRect.size.width = messageLabel.bounds.size.width;
         messageRect.size.height = messageLabel.bounds.size.height;
     }
@@ -285,10 +288,10 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     wrapperView.frame = CGRectMake(0.0, 0.0, wrapperWidth, wrapperHeight);
     
-    if(titleLabel != nil) {
-        titleLabel.frame = titleRect;
-        [wrapperView addSubview:titleLabel];
-    }
+//    if(titleLabel != nil) {
+//        titleLabel.frame = titleRect;
+//        [wrapperView addSubview:titleLabel];
+//    }
     
     if(messageLabel != nil) {
         messageLabel.frame = messageRect;
@@ -447,9 +450,9 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         self.messageColor = [UIColor whiteColor];
         self.maxWidthPercentage = 0.8;
         self.maxHeightPercentage = 0.8;
-        self.horizontalPadding = 10.0;
-        self.verticalPadding = 20.0;
-        self.cornerRadius = 10.0;
+        self.horizontalPadding = 16.0;
+        self.verticalPadding = 14.0;
+        self.cornerRadius = 6.0;
         self.titleFont = [UIFont boldSystemFontOfSize:16.0];
         self.messageFont = [UIFont systemFontOfSize:16.0];
         self.titleAlignment = NSTextAlignmentLeft;
@@ -460,7 +463,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         self.shadowOpacity = 0.8;
         self.shadowRadius = 6.0;
         self.shadowOffset = CGSizeMake(4.0, 4.0);
-        self.imageSize = CGSizeMake(80.0, 80.0);
+        self.imageSize = CGSizeMake(20, 20.0);
         self.activitySize = CGSizeMake(100.0, 100.0);
         self.fadeDuration = 0.2;
     }
