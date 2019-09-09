@@ -41,7 +41,7 @@ static NSString *const CHANNEL_NAME = @"PonnamKarthik/fluttertoast";
         result([NSNumber numberWithBool:true]);
     } else if ([@"showToast" isEqualToString:call.method]) {
         NSString *msg = call.arguments[@"msg"];
-        Boolean showCheck = call.arguments[@"showCheck"];
+        Boolean showCheck = [call.arguments[@"showCheck"] boolValue];
         NSString *gravity = call.arguments[@"gravity"];
         NSString *durationTime = call.arguments[@"time"];
         NSNumber *bgcolor = call.arguments[@"bgcolor"];
