@@ -46,7 +46,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 @interface UIView (ToastPrivate)
 
 /**
- These private methods are being prefixed with "cs_" to reduce the likelihood of non-obvious 
+ These private methods are being prefixed with "cs_" to reduce the likelihood of non-obvious
  naming conflicts with other UIView methods.
  
  @discussion Should the public API also use the cs_ prefix? Technically it should, but it
@@ -145,7 +145,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 - (void)cs_hideToast:(UIView *)toast {
     [self cs_hideToast:toast fromTap:NO];
 }
-    
+
 - (void)cs_hideToast:(UIView *)toast fromTap:(BOOL)fromTap {
     [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                           delay:0.0
@@ -208,7 +208,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     if(image != nil) {
         imageView = [[UIImageView alloc] initWithImage:image];
-       
+        
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.frame = CGRectMake(style.horizontalPadding, style.verticalPadding, style.imageSize.width, style.imageSize.height);
         
@@ -273,7 +273,12 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     CGRect messageRect = CGRectZero;
     
     if(messageLabel != nil) {
-        messageRect.origin.x = imageRect.origin.x + imageRect.size.width + 8;
+        if (image == nil) {
+            messageRect.origin.x = imageRect.origin.x + imageRect.size.width + style.horizontalPadding;
+            
+        }else{
+            messageRect.origin.x = imageRect.origin.x + imageRect.size.width + 8;
+        }
         messageRect.origin.y = style.verticalPadding;
         messageRect.size.width = messageLabel.bounds.size.width;
         messageRect.size.height = messageLabel.bounds.size.height;
@@ -288,10 +293,10 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     wrapperView.frame = CGRectMake(0.0, 0.0, wrapperWidth, wrapperHeight);
     
-//    if(titleLabel != nil) {
-//        titleLabel.frame = titleRect;
-//        [wrapperView addSubview:titleLabel];
-//    }
+    //    if(titleLabel != nil) {
+    //        titleLabel.frame = titleRect;
+    //        [wrapperView addSubview:titleLabel];
+    //    }
     
     if(messageLabel != nil) {
         messageLabel.frame = messageRect;
