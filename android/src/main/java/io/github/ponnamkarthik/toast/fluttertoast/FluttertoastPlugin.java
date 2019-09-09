@@ -5,6 +5,9 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ public class FluttertoastPlugin implements MethodCallHandler {
                 String length = call.argument("length").toString();
                 String gravity = call.argument("gravity").toString();
                 Number bgcolor = call.argument("bgcolor");
+                Boolean showCheck = call.argument("showCheck");
                 Number textcolor = call.argument("textcolor");
                 Number textSize = call.argument("fontSize");
 
@@ -65,22 +69,32 @@ public class FluttertoastPlugin implements MethodCallHandler {
                 }
 
                 if (bgcolor != null && textcolor != null && textSize != null) {
-                    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View layout = inflater.inflate(R.layout.toast_custom, null);
-                    TextView text = layout.findViewById(R.id.text);
-                    text.setText(mMessage);
 
-                    // Custom style
+                    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View layout ;
+                    if (showCheck){
+                        layout = inflater.inflate(R.layout.toast_check, null);
+
+                    }else {
+                        layout = inflater.inflate(R.layout.toast_custom, null);
+                    }
+                    TextView text = layout.findViewById(R.id.text);
+                    FrameLayout back = layout.findViewById(R.id.back);
+                    text.setText(mMessage);
+//                    // Custom style
                     GradientDrawable gradientDrawable = new GradientDrawable();
                     gradientDrawable.setColor(bgcolor.intValue());
-                    gradientDrawable.setCornerRadius(dp2px(4.0f));
-                    text.setBackground(gradientDrawable);
+                    gradientDrawable.setCornerRadius(dp2px(6f));
+                    back.setBackground(gradientDrawable);
                     text.setTextSize(textSize.floatValue());
                     text.setTextColor(textcolor.intValue());
+
 
                     mToast = new Toast(mContext);
                     mToast.setDuration(mDuration);
                     mToast.setView(layout);
+
+
                 } else {
                     mToast = Toast.makeText(mContext, mMessage, mDuration);
                 }
@@ -92,6 +106,8 @@ public class FluttertoastPlugin implements MethodCallHandler {
                 } else {
                     mToast.setGravity(mGravity, 0, 100);
                 }
+//
+
                 mToast.show();
 
                 result.success(true);

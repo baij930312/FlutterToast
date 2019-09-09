@@ -49,6 +49,8 @@ class _MyAppState extends State<MyApp> {
         msg: "This is Center Short Toast",
         toastLength: Toast.LENGTH_SHORT,
         showCheck: true,
+        backgroundColor: Colors.black26,
+        textColor: Colors.white,
         gravity: ToastGravity.CENTER,
         timeInSecForIos: 1);
   }
